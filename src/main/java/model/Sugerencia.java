@@ -4,13 +4,19 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Sugerencia {
+    IServicioMeteorologico servicioMeteorologico;
 
-    public List<Prenda> atuendoRecomendado(){
-        if(haceCalor()){
+    public Sugerencia(IServicioMeteorologico servicioMeteorologico) {
+        this.servicioMeteorologico = servicioMeteorologico;
+    }
+
+
+    public List<Prenda> atuendoRecomendado(String direccion){
+        if(haceCalor(direccion)){
             return atuendoParaCalor();
         }
 
-        if(puedeLlover()){
+        if(puedeLlover(direccion)){
             return atuendoParaLluvia();
         }
         //...
@@ -58,12 +64,12 @@ public class Sugerencia {
 
     }
 
-    private boolean haceCalor() {
-        return new ClimaAdapter().temperaturaCelsius() > 30;
+    private boolean haceCalor(String direccion) {
+        return servicioMeteorologico.temperaturaCelsius(direccion) > 30;
     }
 
-    private boolean puedeLlover() {
-        return new ClimaAdapter().probabilidadesDePrecipitacion() > 0.8;
+    private boolean puedeLlover(String direccion) {
+        return servicioMeteorologico.probabilidadesDePrecipitacion(direccion) > 0.8;
     }
     //Estos 2 metodos suenan como que no deberian ser responsabilidad de la Sugerencia, pero puede ser que tenga sentido que...
     //la sugerencia sepa a partir de que temperatura tiene sentido llevar ropa para calor y a partir de que porcentaje de probabilidad...

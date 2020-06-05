@@ -24,8 +24,8 @@ public class Prenda {
         return tipoPrenda.getCategoria();
     }
 
-    public boolean esAdecuadaParaTemperaturaActual(){
-        return new ClimaAdapter().temperaturaCelsius() < temperaturaMaxima;
+    public boolean esAdecuadaParaTemperatura(float temperatura){
+        return temperatura < temperaturaMaxima;
     }
 
 }
